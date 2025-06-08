@@ -1,0 +1,221 @@
+#:import dp kivy.metrics.dp
+
+<MainScreen>:
+    name: "main"
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(20)
+        spacing: dp(15)
+        canvas.before:
+            Color:
+                rgba: 0.1, 0.1, 0.1, 1  # dark background
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "📋 Utang Management System"
+            font_size: dp(24)
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(50)
+
+        Button:
+            text: "➕ Create A Record"
+            on_release: root.manager.current = "add"
+            background_color: 0.2, 0.6, 0.9, 1
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(50)
+
+        Button:
+            text: "📖 Read All Records"
+            on_release: root.read_records()
+            background_color: 0.2, 0.6, 0.9, 1
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(50)
+
+        Button:
+            text: "🔍 Search A Record"
+            on_release: root.manager.current = "search"
+            background_color: 0.2, 0.6, 0.9, 1
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(50)
+
+        Button:
+            text: "🗑️ Delete A Record"
+            on_release: root.manager.current = "delete"
+            background_color: 0.9, 0.3, 0.3, 1
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(50)
+
+        Button:
+            text: "❌ Exit"
+            on_release: app.stop()
+            background_color: 0.3, 0.3, 0.3, 1
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(50)
+
+<AddRecordScreen>:
+    name: "add"
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(20)
+        spacing: dp(15)
+        canvas.before:
+            Color:
+                rgba: 0.1, 0.1, 0.1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Add New Record"
+            font_size: dp(22)
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(40)
+
+        TextInput:
+            id: name_input
+            hint_text: "Enter Name"
+            multiline: False
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.2, 0.2, 0.2, 1
+
+        TextInput:
+            id: item_input
+            hint_text: "Enter Item"
+            multiline: False
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.2, 0.2, 0.2, 1
+
+        TextInput:
+            id: price_input
+            hint_text: "Enter Price"
+            input_filter: "float"
+            multiline: False
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.2, 0.2, 0.2, 1
+
+        TextInput:
+            id: quantity_input
+            hint_text: "Enter Quantity"
+            input_filter: "int"
+            multiline: False
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.2, 0.2, 0.2, 1
+
+        Button:
+            text: "✅ Submit"
+            on_release: root.add_record()
+            background_color: 0.1, 0.6, 0.3, 1
+            color: 1, 1, 1, 1
+            height: dp(45)
+
+        Button:
+            text: "⬅ Back"
+            on_release: root.manager.current = "main"
+            background_color: 0.3, 0.3, 0.3, 1
+            color: 1, 1, 1, 1
+            height: dp(45)
+
+<SearchScreen>:
+    name: "search"
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(20)
+        spacing: dp(10)
+        canvas.before:
+            Color:
+                rgba: 0.1, 0.1, 0.1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Search Records"
+            font_size: dp(22)
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(40)
+
+        TextInput:
+            id: search_input
+            hint_text: "Enter Name"
+            multiline: False
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.2, 0.2, 0.2, 1
+
+        Button:
+            text: "🔍 Search"
+            on_release: root.search_record()
+            background_color: 0.2, 0.6, 0.9, 1
+            color: 1, 1, 1, 1
+            height: dp(45)
+
+        ScrollView:
+            Label:
+                id: search_results
+                text: ""
+                color: 1, 1, 1, 1
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]
+
+        Button:
+            text: "⬅ Back"
+            on_release: root.manager.current = "main"
+            background_color: 0.3, 0.3, 0.3, 1
+            color: 1, 1, 1, 1
+            height: dp(45)
+
+<DeleteScreen>:
+    name: "delete"
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(20)
+        spacing: dp(10)
+        canvas.before:
+            Color:
+                rgba: 0.1, 0.1, 0.1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Delete Record"
+            font_size: dp(22)
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(40)
+
+        TextInput:
+            id: delete_input
+            hint_text: "Enter Name to Delete"
+            multiline: False
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.2, 0.2, 0.2, 1
+
+        Button:
+            text: "🗑️ Delete"
+            on_release: root.delete_record()
+            background_color: 0.9, 0.3, 0.3, 1
+            color: 1, 1, 1, 1
+            height: dp(45)
+
+        Label:
+            id: delete_status
+            text: ""
+            color: 1, 1, 1, 1
+
+        Button:
+            text: "⬅ Back"
+            on_release: root.manager.current = "main"
+            background_color: 0.3, 0.3, 0.3, 1
+            color: 1, 1, 1, 1
+            height: dp(45)
